@@ -1,4 +1,4 @@
-""" Shows the correlations between assets, liabilities, and stock price """
+""" An example to show how to use the extractor, handles regressing AMZN data """
 
 from BalanceSheetDataExtractor import BalanceSheetDataExtractor
 from sklearn.tree import DecisionTreeRegressor
