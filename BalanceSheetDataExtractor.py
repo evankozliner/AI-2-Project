@@ -54,13 +54,13 @@ class BalanceSheetDataExtractor:
                     report_type, 
                     start_path='ScraXBRL/')
             balance_sheet_values = {}
+            year = report_date.strftime(self.date_format)
             for fact in self.balance_sheet_items:
                 facts_listed = data_view.get_balance_sheet_value(fact)
                 # Balance sheet lists values for years other than one in quesiton, this removes
                 # those duplicates
-                for year in facts_listed.keys():
-                    if year == report_date.strftime(self.date_format):
-                        balance_sheet_values[fact] = facts_listed[year]
+                if year in facts_listed.keys():
+                    balance_sheet_values[fact] = facts_listed[year]
             report_data.append(balance_sheet_values)
 
         # Sort by the date of the report and join the data into a larger vector
