@@ -11,7 +11,8 @@ def main():
     extractor = BalanceSheetDataExtractor('AMZN', '2010-12-31')
     data = extractor.get_all_data()
 
-    x = data[['CashAndCashEquivalentsAtCarryingValue', 'Assets', 'LiabilitiesCurrent']]
+    x = data[['CashAndCashEquivalentsAtCarryingValue', 'Assets', 'LiabilitiesCurrent', 'amznopen']]
+    #x = data[['amznopen']]
     y = data['amznclose']
 
     x_train, x_test = x[0:1000], x[1000:len(x)]
@@ -29,10 +30,14 @@ def main():
     train_score = math.sqrt(mean_squared_error(y_train, clf.predict(x_train)))
     print "Test score: " + str(test_score) + " RMSE error"
     print "Train score: " + str(train_score) + " RMSE error"
+    print clf.feature_importances_
 
     #print clf.score(x_train, y_train)
-    plt.plot(data.index, y)
-    plt.plot(data.index, clf.predict(x))
+    #plt.plot(data.index, y, color='g')
+    #plt.plot(data.index, clf.predict(x), color='r')
+    #plt.plot(data.index, clf.predict(x), color='b')
+    plt.plot(x_test.index, predictions, color='red')
+    plt.plot(x_test.index, y_test, color='black')
     plt.show()
 
 if __name__ == "__main__":
