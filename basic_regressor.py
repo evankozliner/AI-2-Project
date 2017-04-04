@@ -17,8 +17,8 @@ def main():
     #x = data[['amznopen']]
     y = data['amznclose']
 
-    x_train, x_test = x[0:1300], x[1300:len(x)]
-    y_train, y_test = y[0:1300], y[1300:len(y)]
+    x_train, x_test = x[0:1000], x[1000:len(x)]
+    y_train, y_test = y[0:1000], y[1000:len(y)]
 
     #clf = svm.SVR()
     #clf = DecisionTreeRegressor(max_depth=10)
