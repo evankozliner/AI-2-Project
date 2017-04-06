@@ -139,18 +139,49 @@ We used an embedding dimension of 64 for all the attributes of the feature vecto
 \section{Evaluation}
 \label{sec:implementation}
 
+\subsection{Evaluating effects of fundamentals data on stock forecasting}
+\label{ssec:lstm_fundamentals_data}
+
+We ran tests to predict future close values given the same-day open values as well as previous day close value in our data’s test set both with as well as without any fundamentals data. Below are the results of these two configuration:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.4\textwidth]{amazon_incl_fundamentals}
+\caption{Amazon(NASDAQ: AMZN) stock price prediction when using fundamentals data}
+\label{fig:amazon_with_funda}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.4\textwidth]{amazon_without_fundamentals}
+\caption{Amazon(NASDAQ: AMZN) stock price prediction without using fundamentals data}
+\label{fig:amazon_without_funda}
+\end{figure}
+
+Overall, the fundamentals data did not have a significant effect on the accuracy of the LSTM model. Below are the MSE values that we found in the above two cases:
+\begin{table}[H]
+\centering
+\label{evaluation_mse_amazon}
+\begin{tabular}{|l|l|}
+\hline
+                          & MSE          \\ \hline
+Without fundamentals data & result\_here \\ \hline
+With fundamentals data    & result\_here \\ \hline
+\end{tabular}
+\caption{MSE values found while forecasting with and without fundamentals data included}
+\end{table}
 
 \subsection{Evaluating random sampling of sequences for training LSTM}
 \label{ssec:lstm_random_sampling}
 
-Subheadings should appear in lower case (initial word capitalized) in
-boldface.  They should start at the left margin on a separate line.
+
+\textbf{RESULTS HERE}
+
  
-\subsection{Predicting closing price after stock splits}
+\subsection{Evaluating feautre set for predicting closing price after stock splits}
 \label{sssec:predicting_stock_splits}
 
 Predicting closing price of any stock immediately after its split is another challenge one could face during the process. Most likely the fundamentals data is going to remain same for before and after split dates considering the dates belong to same quarter with a high probability. Availability of features and choice of features used for prediction affect how accurate the prediction will be in this case. For example consider Netflix. Netflix (NASDAQ: NFLX) stock went under 7-for-1 stock split in July 2015.
-
 \begin{table}[H]
 \centering
 \label{my-label}
@@ -163,10 +194,17 @@ Date & Actual price & \begin{tabular}[c]{@{}l@{}}Prediction\\ (FV + \\Prev day c
 2015-07-15 & 98.129997 & result\_here & result\_here & result\_here \\ \hline
 \end{tabular}
 \end{adjustbox}
-\caption{Results for different feature vector configurations}
+\caption{Results for different feature vector configurations (FV = Fundamental data vector)}
 \end{table}
 
 As expected the available quarterly fundamentals data remain same for both of these dates and don’t contribute much towards making the correct prediction. Whereas other features like same day open price and previous day close price does affect the prediction which are summarised in table above. As expected, not using same day open price leads to incorrect prediction whereas using helps making a prediction closer to actual price.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{netflix_incl_funda}
+\caption{Netflix(NASDAQ: NFLX) stock price prediction}
+\label{fig:netflix_with_funda}
+\end{figure}
 
 \bibliographystyle{IEEEbib}
 \bibliography{strings,refs}
