@@ -181,7 +181,7 @@ With fundamentals data    & result\_here \\ \hline
 \subsection{Evaluating feautre set for predicting closing price after stock splits}
 \label{sssec:predicting_stock_splits}
 
-Predicting closing price of any stock immediately after its split is another challenge one could face during the process. Most likely the fundamentals data is going to remain same for before and after split dates considering the dates belong to same quarter with a high probability. Availability of features and choice of features used for prediction affect how accurate the prediction will be in this case. For example consider Netflix. Netflix (NASDAQ: NFLX) stock went under 7-for-1 stock split in July 2015.
+Predicting closing price of any stock immediately after its split is another challenge one could face during the process. Most likely the fundamentals data is going to remain same for before and after split dates considering the dates belong to same quarter with a high probability. Availability of features and choice of features used for prediction affect how accurate the prediction will be in this case. For example consider Netflix. Netflix (NASDAQ: NFLX) stock went under 7-for-1 stock split on 15th July 2015.
 \begin{table}[H]
 \centering
 \label{my-label}
@@ -196,7 +196,6 @@ Date & Actual price & \begin{tabular}[c]{@{}l@{}}Prediction\\ (FV + \\Prev day c
 \end{adjustbox}
 \caption{Results for different feature vector configurations (FV = Fundamental data vector)}
 \end{table}
-
 As expected the available quarterly fundamentals data remain same for both of these dates and don’t contribute much towards making the correct prediction. Whereas other features like same day open price and previous day close price does affect the prediction which are summarised in table above. As expected, not using same day open price leads to incorrect prediction whereas using helps making a prediction closer to actual price.
 
 \begin{figure}[H]
@@ -206,6 +205,9 @@ As expected the available quarterly fundamentals data remain same for both of th
 \label{fig:netflix_with_funda}
 \end{figure}
 
+\nocite{maknickienė_maknickas}
+\nocite{ding_zhang_liu_duan_2015}
+\nocite{maknickienė_rutkauskas_maknickas_2011}
 \bibliographystyle{IEEEbib}
 \bibliography{strings,refs}
 \end{document}
