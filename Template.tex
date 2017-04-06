@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage{spconf,amsmath,graphicx}
-\usepackage{float}
+\usepackage{float, adjustbox}
 \graphicspath{ {images/} }
 
 % Example definitions.
@@ -64,19 +64,24 @@ Out of the large amount of fundamentals data only “Cash and Cash Equivalents�
 After the addition of the fundamentals data our input vectors included below features in addition to previously mentioned stock features like this (note the fundamentals data is repeated because the same fundamentals apply for the whole quarter):
 \begin{table}[H]
 \centering
+\begin{adjustbox}{width=0.5\textwidth}
+\small
 \begin{tabular}{|l|l|l|l|l|l|l|l|}
 \hline
- & Cash & Assets & Liabilities \\ \hline
-2011-01-03 & 3.77e+09 & 1.879e+10 & 1.037e+10 \\ \hline
-2011-01-04 & 3.77e+09 & 1.879e+10 & 1.037e+10 \\ \hline
-2011-01-05 & 3.77e+09 & 1.879e+10 & 1.037e+10 \\ \hline
+ & Open & High & Low & Close  & Cash & Assets & Liabilities \\ \hline
+2011-01-03 & 181.36 & 186.00 & 181.21 & 184.22 & 3.77e+09 & 1.879e+10 & 1.037e+10 \\ \hline
+2011-01-04 & 186.14 & 187.69 & 183.77 & 185.00 & 3.77e+09 & 1.879e+10 & 1.037e+10 \\ \hline
+2011-01-05 & 184.10 & 187.44 & 184.07 & 187.41 & 3.77e+09 & 1.879e+10 & 1.037e+10 \\ \hline
 \end{tabular}
+\end{adjustbox}
 \caption{Additional fundamentals data added to input vector}
 \end{table}
 
 Our goal was to predict the “Close” column of each day using the other pieces of data in the columns. To demonstrate the correlation between the closing price and fundamentals data we measured the Pearson correlation between the Cash, Assets, and Liabilities columns and the closing prices for Amazon (ticker AMZN):
 \begin{table}[H]
 \centering
+\begin{adjustbox}{width=0.3\textwidth}
+\small
 \begin{tabular}{|l|l|}
 \hline
 Fundamental & Pearson Correlation \\ \hline
@@ -84,6 +89,7 @@ Assets      & .9411               \\ \hline
 Liabilities & .9017               \\ \hline
 Cash        & .8562               \\ \hline
 \end{tabular}
+\end{adjustbox}
 \caption{Pearson correlation for stock fundamentals}
 \label{my-label}
 \end{table}
@@ -95,8 +101,14 @@ A common approach used when predicting stock market data is to model past data w
 
 \section{Long short-term memory (LSTM)}
 \label{sec:lstm}
-\includegraphics{LSTMarch}
-Long Short Term Memory (LSTM) architecture\cite{hochreiter_schmidhuber_1997} uses special purpose-built memory cells to store information and is better at finding and exploiting long range dependencies in the data. Fig (insert fig no) illustrates a single LSTM memory cell. The memory cells, with self-connections storing the temporal state of the network, are key to the LSTM. Each LSTM block also contains an input gate, an output gate, and a forget gate. The input gate controls the input flow of data and determines by how much we should update each memory cell value. The forget gate determines which values of the cell state should be retained and which values to be forgotten. The output gate controls the output flow of data and determines what parts of the cell state we are going to output.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.3\textwidth]{LSTMarch}
+\caption{Illustrates a single LSTM memory cell}
+\label{fig:lstmcell}
+\end{figure}
+
+Long Short Term Memory (LSTM) architecture\cite{hochreiter_schmidhuber_1997} uses special purpose-built memory cells to store information and is better at finding and exploiting long range dependencies in the data. Fig\ref{fig:lstmcell} illustrates a single LSTM memory cell. The memory cells, with self-connections storing the temporal state of the network, are key to the LSTM. Each LSTM block also contains an input gate, an output gate, and a forget gate. The input gate controls the input flow of data and determines by how much we should update each memory cell value. The forget gate determines which values of the cell state should be retained and which values to be forgotten. The output gate controls the output flow of data and determines what parts of the cell state we are going to output.
 
 A LSTM calculates the network unit activations using the following equations iteratively from t = 1 to T:
 
@@ -123,19 +135,38 @@ Where $\circ$ denotes the Hadamard product, $\sigma$ is the sigmoid function, i,
 
 We used an embedding dimension of 64 for all the attributes of the feature vectors before using them as input to the LSTM. We used a fixed hidden state dimension of 1024 for all the LSTM modes. Additionally we use a dense hidden layer of a single neuron on top of the 2 hidden LSTM layers to determine the closing price. We used a learning rate of 0.001 and an Adam Optimizer minimizing the RMS Error for training the model for 100 epochs. The model was trained on a single GPU with Tensorflow implementation. We used a sliding window of 20 sequences. The batchsize was maintained at 128 sequences per batch
 
-\subsection{Subheadings}
-\label{ssec:subhead}
+
+\section{Evaluation}
+\label{sec:implementation}
+
+
+\subsection{Evaluating random sampling of sequences for training LSTM}
+\label{ssec:lstm_random_sampling}
 
 Subheadings should appear in lower case (initial word capitalized) in
 boldface.  They should start at the left margin on a separate line.
  
-\subsubsection{Sub-subheadings}
-\label{sssec:subsubhead}
+\subsection{Predicting closing price after stock splits}
+\label{sssec:predicting_stock_splits}
 
-Sub-subheadings, as in this paragraph, are discouraged. However, if you
-must use them, they should appear in lower case (initial word
-capitalized) and start at the left margin on a separate line, with paragraph
-text beginning on the following line.  They should be in italics.
+Predicting closing price of any stock immediately after its split is another challenge one could face during the process. Most likely the fundamentals data is going to remain same for before and after split dates considering the dates belong to same quarter with a high probability. Availability of features and choice of features used for prediction affect how accurate the prediction will be in this case. For example consider Netflix. Netflix (NASDAQ: NFLX) stock went under 7-for-1 stock split in July 2015.
+
+\begin{table}[H]
+\centering
+\label{my-label}
+\begin{adjustbox}{width=0.5\textwidth}
+\small
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Date & Actual price & \begin{tabular}[c]{@{}l@{}}Prediction\\ (FV + \\Prev day close)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Prediction\\ (FV + \\Same day open)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Prediction\\ (FV + \\Prev day close + \\Same day open)\end{tabular} \\ \hline
+2015-07-14 & 702.600006 & result\_here & result\_here & result\_here \\ \hline
+2015-07-15 & 98.129997 & result\_here & result\_here & result\_here \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Results for different feature vector configurations}
+\end{table}
+
+As expected the available quarterly fundamentals data remain same for both of these dates and don’t contribute much towards making the correct prediction. Whereas other features like same day open price and previous day close price does affect the prediction which are summarised in table above. As expected, not using same day open price leads to incorrect prediction whereas using helps making a prediction closer to actual price.
 
 \bibliographystyle{IEEEbib}
 \bibliography{strings,refs}
