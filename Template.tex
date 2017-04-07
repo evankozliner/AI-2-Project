@@ -28,20 +28,20 @@ Long Short Term Memory Neural Networks, Stock Forecasting, Recurrent Neural Netw
 \section{Introduction}
 \label{sec:intro}
 
-To analyse the price of stocks, generally one of two methods are employed: technical ,or fundamentals analysis. Fundamentals analysis attempts to measure the intrinsic value of a stock by studying quarterly metrics such as a company’s assets and liabilities, or macro trends like the performance of a whole sector of the economy. Technical analysis generally does not incorporate these data and instead relies mostly on figures like a security's price and volume traded, typically represented as a time series. 
+To analyse the price of stocks, generally one of two methods are employed: technical ,or fundamentals analysis. Fundamentals analysis attempts to measure the intrinsic value of a stock by studying quarterly metrics such as a company's assets and liabilities, or macro trends like the performance of a whole sector of the economy. Technical analysis generally does not incorporate these data and instead relies mostly on figures like a security's price and volume traded, typically represented as a time series. 
 
 The accuracy of regression techniques to predict future stock prices is paramount in technical analysis because it is used to compute a stock's future value and volatility. The volatility and return potential of a stock relative to another dictates which stock is a better purchase.
 
 LSTM models are a type of recurrent neural networks (RNNs) that can handle temporal data and be used to make time series predictions. LSTM models are of particular interest in the domain of time series prediction because they have the capability to pick up patterns in data spanning over long periods of time and unlike traditional RNNs they do not suffer from the vanishing gradient problem when picking up long term patterns and other temporal models. Neural networks in general have the capacity to pick up complex relationships between input data, so there is some chance that given the right data the LSTM could pick up difficult-to-spot but significant relationships between fundamentals data and stock prices.
 
-Any overview of stock price prediction would be incomplete without mentioning the Efficient Market Hypothesis (EMH)\cite{malkiel_2003} and its implications on the feasibility of trading systems. EMH (in its “strong form”) argues that it is impossible to “beat the market” because the stock price is always representative of its fair value. If EMH is correct, it would nullify the point of doing stock analysis at all and suggest that it would be better to purchase index funds. 
+Any overview of stock price prediction would be incomplete without mentioning the Efficient Market Hypothesis (EMH)\cite{malkiel_2003} and its implications on the feasibility of trading systems. EMH (in its “strong form”) argues that it is impossible to "beat the market" because the stock price is always representative of its fair value. If EMH is correct, it would nullify the point of doing stock analysis at all and suggest that it would be better to purchase index funds. 
 
-Another potential problem for the incorporation of fundamentals data in stock price analysis is the risk that stock prices actually have little to do with the intrinsic value of a company. Behavioural economics suggests that investors are subject to  cognitive biases when investing in a company. These biases can cause investors to pick growth stocks that are more frequently reported on over companies with good fundamentals. This behaviour inflates the price of “hot stocks” and leaves many companies unnoticed. The effect of human psychology could be good or bad for trading systems depending on if the trading systems are able to pick up on human patterns of undervalues and overvaluing. 
+Another potential problem for the incorporation of fundamentals data in stock price analysis is the risk that stock prices actually have little to do with the intrinsic value of a company. Behavioral economics suggests that investors are subject to  cognitive biases when investing in a company. These biases can cause investors to pick growth stocks that are more frequently reported on over companies with good fundamentals. This behaviour inflates the price of "hot stocks" and leaves many companies unnoticed. The effect of human psychology could be good or bad for trading systems depending on if the trading systems are able to pick up on human patterns of undervalues and overvaluing.
 
 \section{Data Extraction}
 \label{sec:data_extraction}
 
-Historical stock price data is not frequently provided minute-by-minute, instead it is provided daily and only includes the opening price of the stock, the closing price, the highest price the stock reached, and the lowest price. This data is readily available online, we used the python backtesting framework ‘bt’ to obtain it. 
+Historical stock price data is not frequently provided minute-by-minute, instead it is provided daily and only includes the opening price of the stock, the closing price, the highest price the stock reached, and the lowest price. This data is readily available online, we used the python backtesting framework 'bt' to obtain it. 
 
 The data prior to adding fundamentals was indexed by day and looked like the following:
 \begin{table}[H]
@@ -57,9 +57,9 @@ The data prior to adding fundamentals was indexed by day and looked like the fol
 \label{my-label}
 \end{table}
 
-Fundamentals data is can be difficult to obtain because it needs scraped off 10-K or 10-Q (yearly or quarterly) reports. All of these reports are available through an FTP server provided by the SEA, written in a standard format known XBRL. An open source tool called ScraXBRL can extract the data from these reports into a tree structure, however manual tree search algorithms needed to be written manually to extract specific values from the report. Scripts also needed to be written to properly join fundamentals data (which only comes quarterly) with daily stock prices. 
+Fundamentals data can be difficult to obtain because it needs scraped off 10-K or 10-Q (yearly or quarterly) reports. All of these reports are available through an FTP server provided by the SEA, written in a standard format known XBRL. An open source tool called ScraXBRL can extract the data from these reports into a tree structure, however tree search algorithms had to be written to extract specific values from the report. Scripts were also required to be written to properly join fundamentals data (which only comes quarterly) with daily stock prices. 
 
-Out of the large amount of fundamentals data only “Cash and Cash Equivalents”, “Net Assets”, and “Net Liabilities” were selected as features for the LSTM. These features were selected because they are some of the simplest indicators of a company's financial success. Common financial ratios such as the P/E ratio would be a logical next step, however we only wanted to examine some of the most bare-bones fundamentals for our analysis. 
+Out of the large amount of fundamentals data only "Cash and Cash Equivalents", "Net Assets", and "Net Liabilities" were selected as features for the LSTM. These features were selected because they are some of the simplest indicators of a company's financial success. Common financial ratios such as the P/E ratio would be a logical next step, however we only wanted to examine some of the most bare-bones fundamentals for our analysis. 
 
 After the addition of the fundamentals data our input vectors included below features in addition to previously mentioned stock features like this (note the fundamentals data is repeated because the same fundamentals apply for the whole quarter):
 \begin{table}[H]
@@ -77,7 +77,7 @@ After the addition of the fundamentals data our input vectors included below fea
 \caption{Additional fundamentals data added to input vector}
 \end{table}
 
-Our goal was to predict the “Close” column of each day using the other pieces of data in the columns.  We also decided to include a “previous day close price” feature, which boosted accuracy. It is worth noting that including the the opening price on the same day in the training data would imply that the system would need to be re-run daily to predict new stock closing prices.
+Our goal was to predict the "Close" column of each day using the other pieces of data in the columns.  We also decided to include a "previous day close price" feature, which boosted accuracy. It is worth noting that including the the opening price on the same day in the training data would imply that the system would need to be re-run daily to predict new stock closing prices.
 
 To demonstrate the correlation between the closing price and fundamentals data we measured the Pearson correlation between the Cash, Assets, and Liabilities columns and the closing prices for Amazon (ticker AMZN):
 \begin{table}[H]
