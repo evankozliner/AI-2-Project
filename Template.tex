@@ -97,7 +97,25 @@ These were measured using the scipy.stats library. All of the values have strong
 
 \section{Linear Regression Baseline}
 \label{sec:linear_regression}
-A common approach used when predicting stock market data is to model past data with a series of linear regressions to predict future results. As a baseline to compare our prediction model, we used a linear regression model which trained on past open values versus same-day close values. This model was then used to predict future close values given the same-day open values in our data’s test set. \textbf{[insert data results here]}. We also ran tests on a linear regression model that took into account the fundamentals data, \textbf{[results + specific methodology here]}. Overall, the fundamentals data did not have a significant effect on the accuracy of the linear regression baseline model. 
+A common approach used when predicting stock market data is to model past data with a series of linear regressions to predict future results. As a baseline to compare our prediction model, we used a linear regression model which trained on past open values versus same-day close values. This model was then used to predict future close values given the same-day open values as well as previous day close values in our data’s test set. Below are the results we found:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{basic_regression_RMSE_with_prev_day}
+\caption{Result of linear regression using same day open and previous day close values for Amazon (NASDAQ: AMZN)}
+\label{fig:linear_withoutfunda}
+\end{figure}
+
+Results produced by linear regression model had RMSE of 8.729 on test dataset and 4.0739 on training dataset. We also ran tests on a linear regression model that took into account the fundamentals data. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{linear_only_open_and_close}
+\caption{Result of linear regression using same day open, previous day close values and fundamentals for Amazon (NASDAQ: AMZN)}
+\label{fig:linear_withfunda}
+\end{figure}
+
+Results produced by above mentioned linear regression model using fundamentals data had RMSE of 8.23 on test dataset and 4.08 on training dataset. Overall, the fundamentals data did not have a significant effect on the accuracy of the linear regression baseline model. 
 
 \section{Long short-term memory (LSTM)}
 \label{sec:lstm}
@@ -135,6 +153,7 @@ Where $\circ$ denotes the Hadamard product, $\sigma$ is the sigmoid function, i,
 
 We used an embedding dimension of 64 for all the attributes of the feature vectors before using them as input to the LSTM. We used a fixed hidden state dimension of 1024 for all the LSTM modes. Additionally we use a dense hidden layer of a single neuron on top of the 2 hidden LSTM layers to determine the closing price. We used a learning rate of 0.001 and an Adam Optimizer minimizing the RMS Error for training the model for 100 epochs. The model was trained on a single GPU with Tensorflow implementation. We used a sliding window of 20 sequences. The batchsize was maintained at 128 sequences per batch
 
+\textbf{MENTION RANDOM SELECTION OF SEQUENCES and WHY NOT TO USE LOOKBACK}
 
 \section{Evaluation}
 \label{sec:implementation}
@@ -170,13 +189,6 @@ With fundamentals data    & result\_here \\ \hline
 \end{tabular}
 \caption{MSE values found while forecasting with and without fundamentals data included}
 \end{table}
-
-\subsection{Evaluating random sampling of sequences for training LSTM}
-\label{ssec:lstm_random_sampling}
-
-
-\textbf{RESULTS HERE}
-
  
 \subsection{Evaluating feautre set for predicting closing price after stock splits}
 \label{sssec:predicting_stock_splits}
@@ -204,6 +216,10 @@ As expected the available quarterly fundamentals data remain same for both of th
 \caption{Netflix(NASDAQ: NFLX) stock price prediction}
 \label{fig:netflix_with_funda}
 \end{figure}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
 
 \nocite{maknickienė_maknickas}
 \nocite{ding_zhang_liu_duan_2015}
