@@ -106,7 +106,7 @@ A common approach used when predicting stock market data is to model past data w
 \label{fig:linear_withoutfunda}
 \end{figure}
 
-Results produced by above mentioned linear regression model wihtout using fundamentals data had RMSE of 8.23 on test dataset and 4.08 on training dataset. We also ran tests on a linear regression model that took into account the fundamentals data. 
+Results produced by above mentioned linear regression model wihtout using fundamentals data had RMSE of 8.23 on test dataset and 4.08 on training dataset. We also ran tests on a linear regression model that took into account the fundamentals data , training on not only the opening and closing values, but also the cash and cash equivalents at carrying value, assets, and current liabilities. 
 
 \begin{figure}[H]
 \centering
@@ -115,7 +115,7 @@ Results produced by above mentioned linear regression model wihtout using fundam
 \label{fig:linear_withfunda}
 \end{figure}
 
-Results produced by linear regression model while using fundamentals had RMSE of 8.729 on test dataset and 4.0739 on training dataset. Overall, the fundamentals data did not have a significant effect on the accuracy of the linear regression baseline model. 
+Results produced by linear regression model while using fundamentals had RMSE of 8.729 on test dataset and 4.0739 on training dataset. Overall, the linear regression model using fundamentals data did not show significant improvement on the over the regression model that did not utilize the fundamentals data.
 
 \section{Long short-term memory (LSTM)}
 \label{sec:lstm}
