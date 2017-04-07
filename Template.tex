@@ -18,7 +18,7 @@
 \maketitle
 %
 \begin{abstract}
-We build a Long Short Term Memory (LSTM) neural network model to evaluate how such a network performs when regressing stock price data and to examine the impact of fundamentals data on the LSTM. LSTM models are often used as predictive models for temporal data due to their ability to retain information about long term pattern in data. There have been some attempts to utilize LSTMs for time series predictions like stock pricing, currency pricing, and stock volatility (citation), but it seems that few have examined whether or not financial fundamentals such as balance sheet data can impact their accuracy. The results suggest that the LSTM does not effectively utilize the fundamentals information we provided.
+We build a Long Short Term Memory (LSTM) neural network model to evaluate how such a network performs when regressing stock price data and to examine the impact of fundamentals data on the LSTM. LSTM models are often used as predictive models for temporal data due to their ability to retain information about long term pattern in data. There have been some attempts to utilize LSTMs for time series predictions like stock pricing, currency pricing, and stock volatility\cite{maknickienė_rutkauskas_maknickas_2011}, but it seems that few have examined whether or not financial fundamentals such as balance sheet data can impact their accuracy. The results suggest that the LSTM does not effectively utilize the fundamentals information we provided.
 \end{abstract}
 %
 \begin{keywords}
@@ -77,7 +77,9 @@ After the addition of the fundamentals data our input vectors included below fea
 \caption{Additional fundamentals data added to input vector}
 \end{table}
 
-Our goal was to predict the “Close” column of each day using the other pieces of data in the columns. To demonstrate the correlation between the closing price and fundamentals data we measured the Pearson correlation between the Cash, Assets, and Liabilities columns and the closing prices for Amazon (ticker AMZN):
+Our goal was to predict the “Close” column of each day using the other pieces of data in the columns. We also decided to include a “previous day close price” feature, which boosted accuracy. 
+
+To demonstrate the correlation between the closing price and fundamentals data we measured the Pearson correlation between the Cash, Assets, and Liabilities columns and the closing prices for Amazon (ticker AMZN):
 \begin{table}[H]
 \centering
 \begin{adjustbox}{width=0.3\textwidth}
@@ -126,7 +128,7 @@ Results produced by linear regression model while using fundamentals had RMSE of
 \label{fig:lstmcell}
 \end{figure}
 
-Long Short Term Memory (LSTM) architecture\cite{hochreiter_schmidhuber_1997} uses special purpose-built memory cells to store information and is better at finding and exploiting long range dependencies in the data. Fig\ref{fig:lstmcell} illustrates a single LSTM memory cell. The memory cells, with self-connections storing the temporal state of the network, are key to the LSTM. Each LSTM block also contains an input gate, an output gate, and a forget gate. The input gate controls the input flow of data and determines by how much we should update each memory cell value. The forget gate determines which values of the cell state should be retained and which values to be forgotten. The output gate controls the output flow of data and determines what parts of the cell state we are going to output.
+Long Short Term Memory (LSTM) architecture\cite{hochreiter_schmidhuber_1997} uses special purpose-built memory cells to store information and is better at finding and exploiting long range dependencies in the data. Fig\ref{fig:lstmcell} illustrates a single LSTM memory cell. The memory cells, with self-connections storing the temporal state of the network, are key to the “memory” of the to the LSTM. Each LSTM block also contains an input gate, an output gate, and a forget gate. The input gate controls the input flow of data and determines by how much we should update each memory cell value. The forget gate determines which values of the cell state should be retained and which values to be forgotten. The output gate controls the output flow of data and determines what parts of the cell state we are going to output.
 
 A LSTM calculates the network unit activations using the following equations iteratively from t = 1 to T:
 
@@ -183,9 +185,9 @@ Overall, the fundamentals data did not have a significant effect on the accuracy
 \label{evaluation_mse_amazon}
 \begin{tabular}{|l|l|}
 \hline
-                          & MSE          \\ \hline
-Without fundamentals data & result\_here \\ \hline
-With fundamentals data    & result\_here \\ \hline
+                          & MSE (test dataset)          \\ \hline
+Without fundamentals data & 12.0814 \\ \hline
+With fundamentals data    & 11.4807 \\ \hline
 \end{tabular}
 \caption{MSE values found while forecasting with and without fundamentals data included}
 \end{table}
@@ -223,7 +225,6 @@ As expected the available quarterly fundamentals data remain same for both of th
 
 \nocite{maknickienė_maknickas}
 \nocite{ding_zhang_liu_duan_2015}
-\nocite{maknickienė_rutkauskas_maknickas_2011}
 \bibliographystyle{IEEEbib}
 \bibliography{strings,refs}
 \end{document}
