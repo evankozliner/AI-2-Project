@@ -34,7 +34,7 @@ The accuracy of regression techniques to predict future stock prices is paramoun
 
 LSTM models are type of recurrent neural networks (RNNs) that can handle temporal data and be used to make time series predictions. LSTM models are of a particular interest in the domain of time series prediction because they have the capability to pick up patterns in data spanning long periods of time, unlike traditional RNNs, which suffer from the vanishing gradient problem when picking up long term patterns and other temporal models. Neural networks in general have the capacity to pick up complex relationships between input data, so there is some chance that that given the right data the LSTM could pick up difficult-to-spot but significant relationships between fundamentals data and stock prices.  
 
-Any overview of stock price prediction would be incomplete without mentioning the Efficient Market Hypothesis (EMH)\cite{malkiel_2003} and its implications on the feasibility of trading systems. EMH argues that it is impossible to “beat the market” because the stock price is always representative of its fair value. If EMH is correct, it would nullify the point of doing stock analysis at all and suggest that it would be better to purchase index funds. 
+Any overview of stock price prediction would be incomplete without mentioning the Efficient Market Hypothesis (EMH)\cite{malkiel_2003} and its implications on the feasibility of trading systems. EMH (in its “strong form”) argues that it is impossible to “beat the market” because the stock price is always representative of its fair value. If EMH is correct, it would nullify the point of doing stock analysis at all and suggest that it would be better to purchase index funds. 
 
 Another potential problem for the incorporation of fundamentals data in stock price analysis is the risk that stock prices actually have little to do with the intrinsic value of a company. Behavioural economics suggests that investors are subject to  cognitive biases when investing in a company. These biases can cause investors to pick growth stocks that are more frequently reported on over companies with good fundamentals. This behaviour inflates the price of “hot stocks” and leaves many companies unnoticed. The effect of human psychology could be good or bad for trading systems depending on if the trading systems are able to pick up on human patterns of undervalues and overvaluing. 
 
@@ -77,7 +77,7 @@ After the addition of the fundamentals data our input vectors included below fea
 \caption{Additional fundamentals data added to input vector}
 \end{table}
 
-Our goal was to predict the “Close” column of each day using the other pieces of data in the columns. We also decided to include a “previous day close price” feature, which boosted accuracy. 
+Our goal was to predict the “Close” column of each day using the other pieces of data in the columns.  We also decided to include a “previous day close price” feature, which boosted accuracy. It is worth noting that including the the opening price on the same day in the training data would imply that the system would need to be re-run daily to predict new stock closing prices.
 
 To demonstrate the correlation between the closing price and fundamentals data we measured the Pearson correlation between the Cash, Assets, and Liabilities columns and the closing prices for Amazon (ticker AMZN):
 \begin{table}[H]
@@ -222,6 +222,8 @@ As expected the available quarterly fundamentals data remain same for both of th
 \section{Conclusion}
 \label{sec:conclusion}
 
+LSTM models have paved the way for huge gains in problems with temporal data such as speech recognition, and in the past advances in natural language processing techniques such as Hidden Markov Models have led to better financial predictors. Although our model’s accuracy was not boosted by the addition of the fundamentals we chose, this does not exclude the possibility of different fundamentals having positive results, nor does it exclude the LSTM from having potential applications in other areas of finance. In future work we would like to explore more of the data in the 10-K and 10-Q reports such as the P/E ratio. We also believe the area of portfolio optimization could see some results from the incorporation of the LSTM. 
+
 
 \nocite{maknickienė_maknickas}
 \nocite{ding_zhang_liu_duan_2015}
