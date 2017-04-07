@@ -128,7 +128,7 @@ Results produced by linear regression model while using fundamentals had RMSE of
 \label{fig:lstmcell}
 \end{figure}
 
-Long Short Term Memory (LSTM) architecture\cite{hochreiter_schmidhuber_1997} uses special purpose-built memory cells to store information and is better at finding and exploiting long range dependencies in the data. Fig\ref{fig:lstmcell} illustrates a single LSTM memory cell. The memory cells, with self-connections storing the temporal state of the network, are key to the “memory” of the to the LSTM. Each LSTM block also contains an input gate, an output gate, and a forget gate. The input gate controls the input flow of data and determines by how much we should update each memory cell value. The forget gate determines which values of the cell state should be retained and which values to be forgotten. The output gate controls the output flow of data and determines what parts of the cell state we are going to output.
+Long Short Term Memory (LSTM) architecture\cite{hochreiter_schmidhuber_1997} uses special purpose-built memory cells to store information and is better at finding and exploiting long range dependencies in the data. Fig \ref{fig:lstmcell} illustrates a single LSTM memory cell. The memory cells, with self-connections storing the temporal state of the network, are key to the “memory” of the to the LSTM. Each LSTM block also contains an input gate, an output gate, and a forget gate. The input gate controls the input flow of data and determines by how much we should update each memory cell value. The forget gate determines which values of the cell state should be retained and which values to be forgotten. The output gate controls the output flow of data and determines what parts of the cell state we are going to output.
 
 A LSTM calculates the network unit activations using the following equations iteratively from t = 1 to T:
 
@@ -193,7 +193,7 @@ With fundamentals data    & 11.4807 \\ \hline
 \subsection{Evaluating feautre set for predicting closing price after stock splits}
 \label{sssec:predicting_stock_splits}
 
-Predicting closing price of any stock immediately after its split is another challenge one could face during the process. Most likely the fundamentals data is going to remain same for before and after split dates considering the dates belong to same quarter with a high probability. Availability of features and choice of features used for prediction affect how accurate the prediction will be in this case. For example consider Netflix. Netflix (NASDAQ: NFLX) stock went under 7-for-1 stock split on 15th July 2015.
+Predicting closing price of any stock immediately after its split is another challenge one could face during the process. Most likely the fundamentals data is going to remain same for before and after split dates considering the dates belong to same quarter with a high probability. Availability of features and choice of features used for prediction affect how accurate the prediction will be in this case. For example consider Netflix. Netflix (NASDAQ: NFLX) stock went under 7-for-1 stock split on 15th July 2015. Below table summarizes the effect of feature set selection on price prediction:
 \begin{table}[H]
 \centering
 \label{my-label}
