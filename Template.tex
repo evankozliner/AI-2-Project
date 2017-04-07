@@ -133,29 +133,27 @@ Long Short Term Memory (LSTM) architecture\cite{hochreiter_schmidhuber_1997} use
 A LSTM calculates the network unit activations using the following equations iteratively from t = 1 to T:
 
 \begin{equation}
-ft  = \sigma ( Wf.[ht-1, xt] + bf)
+f_t  = \sigma ( Wf.[h_{t-1}, x_t] + b_f)
 \end{equation}
 \begin{equation}
-It  = \sigma ( Wi.[ht-1, xt] + bi)
+I_t  = \sigma ( Wi.[h_{t-1}, xt] + b_i)
 \end{equation}
 \begin{equation}
-ot  = \sigma ( Wo.[ht-1, xt] + bo)
+o_t  = \sigma ( Wo.[h_{t-1}, x_t] + b_o)
 \end{equation}
 \begin{equation}
-ct = ft \circ ct-1  +  it \circ\sigma ( Wc.[ht-1, xt] + bc)
+c_t = f_t \odot c_{t-1}  +  i_t \odot\sigma ( Wc.[h_{t-1}, x_t] + b_c)
 \end{equation}
 \begin{equation}
-ht = ot \circ tanh(ct)
+h_t = o_t \odot tanh(c_t)
 \end{equation}
 
-Where $\circ$ denotes the Hadamard product, $\sigma$ is the sigmoid function, i, f, o and c are respectively the input gate, forget gate, output gate and cell activation vectors, all of which are of the same same size as the hidden vector h. W and b represent the corresponding weight matrices and bias vectors for the respective gates.
+Where $\odot$ denotes the Hadamard product, $\sigma$ is the sigmoid function, i, f, o and c are respectively the input gate, forget gate, output gate and cell activation vectors, all of which are of the same same size as the hidden vector h. W and b represent the corresponding weight matrices and bias vectors for the respective gates.
 
 \section{Implementation}
 \label{sec:implementation}
 
 We used an embedding dimension of 64 for all the attributes of the feature vectors before using them as input to the LSTM. We used a fixed hidden state dimension of 1024 for all the LSTM modes. Additionally we use a dense hidden layer of a single neuron on top of the 2 hidden LSTM layers to determine the closing price. We used a learning rate of 0.001 and an Adam Optimizer minimizing the RMS Error for training the model for 100 epochs. The model was trained on a single GPU with Tensorflow implementation. We used a sliding window of 20 sequences. The batchsize was maintained at 128 sequences per batch
-
-\textbf{MENTION RANDOM SELECTION OF SEQUENCES and WHY NOT TO USE LOOKBACK}
 
 \section{Evaluation}
 \label{sec:implementation}
@@ -204,8 +202,8 @@ Predicting closing price of any stock immediately after its split is another cha
 \begin{tabular}{|l|l|l|l|l|}
 \hline
 Date & Actual price & \begin{tabular}[c]{@{}l@{}}Prediction\\ (FV + \\Prev day close)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Prediction\\ (FV + \\Same day open)\end{tabular} & \begin{tabular}[c]{@{}l@{}}Prediction\\ (FV + \\Prev day close + \\Same day open)\end{tabular} \\ \hline
-2015-07-14 & 702.600006 & result\_here & result\_here & result\_here \\ \hline
-2015-07-15 & 98.129997 & result\_here & result\_here & result\_here \\ \hline
+2015-07-14 & 702.600006 & result\_here & result\_here & 708.034 \\ \hline
+2015-07-15 & 98.129997 & result\_here & result\_here & 355.1507 \\ \hline
 \end{tabular}
 \end{adjustbox}
 \caption{Results for different feature vector configurations (FV = Fundamental data vector)}
@@ -214,7 +212,7 @@ As expected the available quarterly fundamentals data remain same for both of th
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.4\textwidth]{netflix_incl_funda}
+\includegraphics[width=0.5\textwidth]{netflix_incl_funda}
 \caption{Netflix(NASDAQ: NFLX) stock price prediction}
 \label{fig:netflix_with_funda}
 \end{figure}
