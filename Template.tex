@@ -28,7 +28,7 @@ Long Short Term Memory Neural Networks, Stock Forecasting, Recurrent Neural Netw
 \section{Introduction}
 \label{sec:intro}
 
-To analyse the price of stocks, generally one of two methods are employed: technical ,or fundamentals analysis. Fundamentals analysis attempts to measure the intrinsic value of a stock by studying quarterly metrics such as a company's assets and liabilities, or macro trends like the performance of a whole sector of the economy. Technical analysis generally does not incorporate these data and instead relies mostly on figures like a security's price and volume traded, typically represented as a time series. 
+To analyse the price of stocks, generally one of two methods are employed: technical, or fundamentals analysis. Fundamentals analysis attempts to measure the intrinsic value of a stock by studying quarterly metrics such as a company's assets and liabilities, or macro trends like the performance of a whole sector of the economy. Technical analysis generally does not incorporate these data and instead relies mostly on figures like a security's price and volume traded, typically represented as a time series. 
 
 The accuracy of regression techniques to predict future stock prices is paramount in technical analysis because it is used to compute a stock's future value and volatility. The volatility and return potential of a stock relative to another dictates which stock is a better purchase.
 
@@ -190,10 +190,10 @@ With fundamentals data    & 11.4807 \\ \hline
 \caption{MSE values found while forecasting with and without fundamentals data included}
 \end{table}
  
-\subsection{Evaluating feautre set for predicting closing price after stock splits}
+\subsection{Evaluating feature set for predicting closing price after stock splits}
 \label{sssec:predicting_stock_splits}
 
-Predicting closing price of any stock immediately after its split is another challenge one could face during the process. Most likely the fundamentals data is going to remain same for before and after split dates considering the dates belong to same quarter with a high probability. Availability of features and choice of features used for prediction affect how accurate the prediction will be in this case. For example consider Netflix. Netflix (NASDAQ: NFLX) stock went under 7-for-1 stock split on 15th July 2015. Below table summarizes the effect of feature set selection on price prediction:
+Predicting closing price of any stock immediately after its split is another challenge one could face during the process. Most likely the fundamentals data is going to remain same for before and after split dates considering the dates belong to same quarter with a high probability. Availability of features and choice of features used for prediction affect how accurate the prediction will be in this case. For example, Netflix (NASDAQ: NFLX) stock went under 7-for-1 stock split on 15th July 2015. Below table summarizes the effect of feature set selection on price prediction:
 \begin{table}[H]
 \centering
 \label{my-label}
@@ -206,9 +206,9 @@ Date & Actual price & \begin{tabular}[c]{@{}l@{}}Prediction\\ (FV + \\Prev day c
 2015-07-15 & 98.129997 & 698.5301 & 355.1507 \\ \hline
 \end{tabular}
 \end{adjustbox}
-\caption{Results for different feature vector configurations (FV = Fundamental data vector)}
+\caption{Results for different feature vector configurations (FV = Fundamental data vector) for Netflix stock around day of split}
 \end{table}
-As expected the available quarterly fundamentals data remain same for both of these dates and don’t contribute much towards making the correct prediction. Whereas other features like same day open price and previous day close price does affect the prediction which are summarised in table above. As expected, not using same day open price leads to incorrect prediction whereas using helps making a prediction closer to actual price.
+As expected, the available quarterly fundamentals data remain same for both of these dates and don’t contribute much towards making the correct prediction. Whereas, other features like same day open price, and previous day close price does affect the prediction which are summarised in table above. As expected, not using same day open price leads to incorrect prediction whereas using helps making a prediction closer to actual price.
 
 \begin{figure}[H]
 \centering
@@ -220,7 +220,7 @@ As expected the available quarterly fundamentals data remain same for both of th
 \section{Conclusion}
 \label{sec:conclusion}
 
-LSTM models have paved the way for huge gains in problems with temporal data such as speech recognition, and in the past advances in natural language processing techniques such as Hidden Markov Models have led to better financial predictors. Although our model’s accuracy was not boosted by the addition of the fundamentals we chose, this does not exclude the possibility of different fundamentals having positive results, nor does it exclude the LSTM from having potential applications in other areas of finance. In future work we would like to explore more of the data in the 10-K and 10-Q reports such as the P/E ratio. We also believe the area of portfolio optimization could see some results from the incorporation of the LSTM. 
+LSTM models have paved the way for huge gains in problems with temporal data such as speech recognition, and in the past advances in natural language processing techniques just as Hidden Markov Models have led to better financial predictors. Although our model’s accuracy was not boosted by the addition of the fundamentals we chose, this does not exclude the possibility of different fundamentals having positive results, nor does it exclude the LSTM from having potential applications in other areas of finance. In future work we would like to explore more of the data in the 10-K and 10-Q reports such as the P/E ratio. We also believe the area of portfolio optimization could see some results from the incorporation of the LSTM. 
 
 
 \nocite{maknickienė_maknickas}
