@@ -99,23 +99,23 @@ These were measured using the scipy.stats library. All of the values have strong
 \label{sec:linear_regression}
 A common approach used when predicting stock market data is to model past data with a series of linear regressions to predict future results. As a baseline to compare our prediction model, we used a linear regression model which trained on past open values versus same-day close values. This model was then used to predict future close values given the same-day open values as well as previous day close values in our data’s test set. Below are the results we found:
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{basic_regression_RMSE_with_prev_day}
 \caption{Result of linear regression using same day open and previous day close values for Amazon (NASDAQ: AMZN)}
 \label{fig:linear_withoutfunda}
 \end{figure}
 
-Results produced by linear regression model had RMSE of 8.729 on test dataset and 4.0739 on training dataset. We also ran tests on a linear regression model that took into account the fundamentals data. 
+Results produced by above mentioned linear regression model wihtout using fundamentals data had RMSE of 8.23 on test dataset and 4.08 on training dataset. We also ran tests on a linear regression model that took into account the fundamentals data. 
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{linear_only_open_and_close}
 \caption{Result of linear regression using same day open, previous day close values and fundamentals for Amazon (NASDAQ: AMZN)}
 \label{fig:linear_withfunda}
 \end{figure}
 
-Results produced by above mentioned linear regression model using fundamentals data had RMSE of 8.23 on test dataset and 4.08 on training dataset. Overall, the fundamentals data did not have a significant effect on the accuracy of the linear regression baseline model. 
+Results produced by linear regression model while using fundamentals had RMSE of 8.729 on test dataset and 4.0739 on training dataset. Overall, the fundamentals data did not have a significant effect on the accuracy of the linear regression baseline model. 
 
 \section{Long short-term memory (LSTM)}
 \label{sec:lstm}
